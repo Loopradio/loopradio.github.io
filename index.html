@@ -5,63 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PETE ROCA SESSION No.1</title>
   <link rel="stylesheet" href="css/style.css">
-  <style>
-    #play-button {
-      display: none; /* Ocultar el botón inicialmente */
-    }
-  </style>
 </head>
 <body>
 <div class="container">
-  <h1>PETE ROCA SESSION No.1</h1>
-  <p>Coming soon to all dance floors</p>
-  <button id="play-button">Play Music</button>
+  <h1 class="title">PETE ROCA SESSION No.1</h1>
+  <p class="subtitle">Coming soon to all dance floors</p>
+  <button id="play-button" class="button">Play Music</button>
 </div>
 
-<script>
-  window.onload = function() {
-    let audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    let audioBuffer;
-    let audioSource;
-    let isPlaying = false;
-    const playButton = document.getElementById("play-button");
+<div id="loader" class="loader">
+  <span>Loading music...</span>
+</div>
 
-    // Function to fetch and decode audio file
-    function fetchAndDecodeAudio(url) {
-      fetch(url)
-        .then(response => response.arrayBuffer())
-        .then(arrayBuffer => audioContext.decodeAudioData(arrayBuffer))
-        .then(decodedAudioBuffer => {
-          audioBuffer = decodedAudioBuffer;
-          playButton.style.display = 'inline-block'; // Mostrar el botón una vez que el audio esté listo
-        })
-        .catch(error => console.error('Error loading audio file:', error));
-    }
+<audio id="bg-music" loop>
+  <source src="session_no1.mp3" type="audio/mp3">
+  Your browser does not support the audio element.
+</audio>
 
-    // Load audio file on page load (assuming session_no1.mp3 is in the root directory)
-    fetchAndDecodeAudio('session_no1.mp3');
-
-    // Event listener for play button
-    playButton.addEventListener('click', function() {
-      if (!audioBuffer) return; // Audio not loaded yet
-
-      if (!isPlaying) {
-        audioSource = audioContext.createBufferSource();
-        audioSource.buffer = audioBuffer;
-        audioSource.loop = true; // Loop audio
-        audioSource.connect(audioContext.destination);
-        audioSource.start(0);
-
-        isPlaying = true;
-        playButton.textContent = "Pause Music";
-      } else {
-        audioSource.stop();
-        isPlaying = false;
-        playButton.textContent = "Play Music";
-      }
-    });
-  };
-</script>
-
+<script src="js/app.js"></script>
 </body>
 </html>
