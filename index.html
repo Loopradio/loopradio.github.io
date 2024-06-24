@@ -5,42 +5,63 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PETE ROCA SESSION No.1</title>
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    #play-button {
+      display: none; /* Ocultar el botón inicialmente */
+    }
+  </style>
 </head>
 <body>
 <div class="container">
   <h1>PETE ROCA SESSION No.1</h1>
-  <p>Coming soon to all dance floors!</p>
+  <p>Coming soon to all dance floors</p>
   <button id="play-button">Play Music</button>
 </div>
-<audio id="bg-music" loop>
-  <source src="session_no1.mp3" type="audio/mpeg">
-  <source src="session_no1.m4a" type="audio/mp4">
-  Your browser does not support audio playback.
-</audio>
+
 <script>
   window.onload = function() {
-    let audio = document.getElementById("bg-music");
-    let playButton = document.getElementById("play-button");
+    let audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    let audioBuffer;
+    let audioSource;
+    let isPlaying = false;
+    const playButton = document.getElementById("play-button");
 
+    // Function to fetch and decode audio file
+    function fetchAndDecodeAudio(url) {
+      fetch(url)
+        .then(response => response.arrayBuffer())
+        .then(arrayBuffer => audioContext.decodeAudioData(arrayBuffer))
+        .then(decodedAudioBuffer => {
+          audioBuffer = decodedAudioBuffer;
+          playButton.style.display = 'inline-block'; // Mostrar el botón una vez que el audio esté listo
+        })
+        .catch(error => console.error('Error loading audio file:', error));
+    }
+
+    // Load audio file on page load (assuming session_no1.mp3 is in the root directory)
+    fetchAndDecodeAudio('session_no1.mp3');
+
+    // Event listener for play button
     playButton.addEventListener('click', function() {
-      if (audio.paused) {
-        audio.play().then(function() {
-          playButton.textContent = "Pause Music";
-        }).catch(function(error) {
-          console.log("Error playing audio: ", error);
-        });
+      if (!audioBuffer) return; // Audio not loaded yet
+
+      if (!isPlaying) {
+        audioSource = audioContext.createBufferSource();
+        audioSource.buffer = audioBuffer;
+        audioSource.loop = true; // Loop audio
+        audioSource.connect(audioContext.destination);
+        audioSource.start(0);
+
+        isPlaying = true;
+        playButton.textContent = "Pause Music";
       } else {
-        audio.pause();
+        audioSource.stop();
+        isPlaying = false;
         playButton.textContent = "Play Music";
       }
     });
-
-    // Special handling for iOS devices
-    let isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-    if (isIOS) {
-      audio.load();  // Ensure the audio is preloaded
-    }
   };
 </script>
+
 </body>
 </html>
