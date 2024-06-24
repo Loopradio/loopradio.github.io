@@ -29,6 +29,11 @@
         playButton.textContent = "Play Music";
       }
     });
+    // Special handling for iOS devices
+    let isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    if (isIOS) {
+      audio.load();  // Ensure the audio is preloaded
+    }
   };
 </script>
 </body>
