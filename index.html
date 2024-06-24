@@ -20,15 +20,20 @@
   window.onload = function() {
     let audio = document.getElementById("bg-music");
     let playButton = document.getElementById("play-button");
+
     playButton.addEventListener('click', function() {
       if (audio.paused) {
-        audio.play();
-        playButton.textContent = "Pause Music";
+        audio.play().then(function() {
+          playButton.textContent = "Pause Music";
+        }).catch(function(error) {
+          console.log("Error playing audio: ", error);
+        });
       } else {
         audio.pause();
         playButton.textContent = "Play Music";
       }
     });
+
     // Special handling for iOS devices
     let isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
     if (isIOS) {
