@@ -20,22 +20,45 @@
 
 <script>
   window.onload = function() {
-    let audioElement = new Audio();
-    audioElement.loop = true;
-    audioElement.src = 'session_no1.mp3';
+    let audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    let audioBuffer;
+    let audioSource;
+    let isPlaying = false;
+    const playButton = document.getElementById("play-button");
 
-    audioElement.addEventListener('canplaythrough', function() {
-      const playButton = document.getElementById("play-button");
-      playButton.style.display = 'inline-block'; // Mostrar el botón una vez que el audio esté listo
-      playButton.addEventListener('click', function() {
-        if (audioElement.paused) {
-          audioElement.play();
-          playButton.textContent = "Pause Music";
-        } else {
-          audioElement.pause();
-          playButton.textContent = "Play Music";
-        }
-      });
+    // Function to fetch and decode audio file
+    function fetchAndDecodeAudio(url) {
+      fetch(url)
+        .then(response => response.arrayBuffer())
+        .then(arrayBuffer => audioContext.decodeAudioData(arrayBuffer))
+        .then(decodedAudioBuffer => {
+          audioBuffer = decodedAudioBuffer;
+          playButton.style.display = 'inline-block'; // Mostrar el botón una vez que el audio esté listo
+        })
+        .catch(error => console.error('Error loading audio file:', error));
+    }
+
+    // Load audio file on page load (assuming session_no1.mp3 is in the root directory)
+    fetchAndDecodeAudio('session_no1.mp3');
+
+    // Event listener for play button
+    playButton.addEventListener('click', function() {
+      if (!audioBuffer) return; // Audio not loaded yet
+
+      if (!isPlaying) {
+        audioSource = audioContext.createBufferSource();
+        audioSource.buffer = audioBuffer;
+        audioSource.loop = true; // Loop audio
+        audioSource.connect(audioContext.destination);
+        audioSource.start(0);
+
+        isPlaying = true;
+        playButton.textContent = "Pause Music";
+      } else {
+        audioSource.stop();
+        isPlaying = false;
+        playButton.textContent = "Play Music";
+      }
     });
   };
 </script>
