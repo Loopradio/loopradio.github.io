@@ -8,19 +8,21 @@
 </head>
 <body>
 <div class="container">
-  <h1 class="title">PETE ROCA SESSION No.1</h1>
-  <p class="subtitle">Coming soon to all dance floors</p>
-  <button id="play-button" class="button">Play Music</button>
-</div>
+  <!-- Logo section -->
+  <div class="logo-container">
+    <img src="img/logo_pete.jpg" alt="Logo" class="logo">
+  </div>
 
-<div id="loader" class="loader">
-  <span>Loading music...</span>
-</div>
+  <!-- Cassette tape section -->
+  <div class="cassette-container">
+    <img src="img/logo_cinta.webp" alt="Cassette tape" class="cassette">
+  </div>
 
-<audio id="bg-music" loop preload="auto">
-  <source src="session_no1.mp3" type="audio/mp3">
-  Your browser does not support the audio element.
-</audio>
+  <!-- Play button for audio -->
+  <button id="play-button">Play Loop Radio</button>
+
+  <div id="loader"></div> <!-- Loader -->
+</div>
 
 <script src="js/app.js"></script>
 </body>

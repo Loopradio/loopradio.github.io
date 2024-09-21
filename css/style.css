@@ -84,97 +84,89 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
-/* Reset de estilos y estilos generales */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
+/* General body styling */
 body {
   font-family: 'Arial', sans-serif;
-  background-color: #000;
-  color: #fff;
-  text-align: center;
-  padding: 20px;
-  animation: disco 10s infinite alternate; /* Animación de cambio de color */
+  background-color: #e3dac2; /* Color de fondo especificado */
+  color: black; /* Cambia el color del texto para que contraste mejor */
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
 }
 
-@keyframes disco {
-  0% { background-color: #ff69b4; } /* Rosa */
-  20% { background-color: #ff1493; } /* Rosa profundo */
-  40% { background-color: #00bfff; } /* Azul cielo */
-  60% { background-color: #00ff00; } /* Verde lima */
-  80% { background-color: #ffff00; } /* Amarillo */
-  100% { background-color: #ff69b4; } /* Rosa */
-}
-
+/* Container styling */
 .container {
-  max-width: 600px;
-  margin: 0 auto;
+  position: relative;
+  max-width: 800px;
+  width: 100%;
   padding: 20px;
-  background-color: rgba(0, 0, 0, 0.8); /* Fondo semi-transparente */
-  border-radius: 10px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-  transition: background-color 0.5s ease; /* Transición suave para el cambio de fondo */
-}
-
-.title {
-  font-size: 48px;
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 4px;
-  margin-bottom: 20px;
-  color: #ffd700; /* Amarillo dorado */
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  transition: color 0.5s ease; /* Transición suave para el cambio de color */
-}
-
-.subtitle {
-  font-size: 24px;
-  margin-bottom: 30px;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-  transition: color 0.5s ease; /* Transición suave para el cambio de color */
-}
-
-.button {
-  display: none; /* Ocultar el botón inicialmente */
-  margin-top: 30px;
-  padding: 15px 30px;
-  font-size: 24px;
-  cursor: pointer;
-  background-color: #ff69b4; /* Rosa */
-  color: #fff;
-  border: 2px solid #ff69b4;
-  border-radius: 50px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  outline: none;
-  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
-}
-
-.button:hover {
-  background-color: transparent;
-  color: #ff69b4;
-  transform: scale(1.1);
-}
-
-.button:active {
-  transform: scale(0.9);
-}
-
-.loader {
-  display: none;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1000;
-  background-color: rgba(255, 255, 255, 0.8);
-  padding: 20px;
-  border-radius: 8px;
   text-align: center;
-  color: #333;
+  background-color: #e3dac2; /* Fondo del contenedor */
+}
+
+/* Logo styling for top-left corner */
+.logo-container {
+  position: absolute;
+  top: 10px; /* Más cerca del borde superior */
+  left: 10px; /* Más cerca del borde izquierdo */
+}
+
+.logo {
+  width: 150px; /* Tamaño del logo aumentado */
+}
+
+/* Cassette styling */
+.cassette-container img {
+  width: 300px; /* Ajustar si es necesario */
+  margin-bottom: 20px;
+  animation: rotateCassette 3s infinite ease-in-out;
+  background-color: transparent; /* Asegurarse de que no haya fondo */
+}
+
+/* Cassette animation */
+@keyframes rotateCassette {
+  0% { transform: rotate(0deg); }
+  50% { transform: rotate(10deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* Play button styling */
+#play-button {
+  padding: 15px 30px;
+  background-color: #ff0066;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+}
+
+#play-button:hover {
+  background-color: #ff6699;
+}
+
+/* Loader styling */
+#loader {
+  display: none;
+  border: 8px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 8px solid #ff0066;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite;
+  margin: 20px auto;
+}
+
+/* Loader animation */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 /* ==========================================================================

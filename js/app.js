@@ -2,6 +2,7 @@ window.onload = function() {
   let audioContext = new (window.AudioContext || window.webkitAudioContext)();
   let audioBuffer;
   let audioSource;
+  let isPlaying = false;
   const playButton = document.getElementById("play-button");
   const loader = document.getElementById("loader");
 
@@ -28,21 +29,23 @@ window.onload = function() {
   playButton.addEventListener('click', function() {
     if (!audioBuffer) return; // Audio not loaded yet
 
-    if (audioContext.currentTime === 0) {
+    if (!isPlaying) {
+      // Create audio source
       audioSource = audioContext.createBufferSource();
       audioSource.buffer = audioBuffer;
       audioSource.loop = true; // Loop audio
+
+      // Get random start time within the duration of the audio
+      const randomStartTime = Math.random() * audioBuffer.duration;
       audioSource.connect(audioContext.destination);
-      audioSource.start(0);
-      playButton.textContent = "Pause Music";
-    } else if (audioContext.state === "running") {
-      audioContext.suspend().then(function () {
-        playButton.textContent = "Play Music";
-      });
-    } else if(audioContext.state === "suspended") {
-      audioContext.resume().then(function () {
-        playButton.textContent = "Pause Music";
-      });
+      audioSource.start(0, randomStartTime); // Start from a random time
+
+      isPlaying = true;
+      playButton.textContent = "Pause Loop Radio";
+    } else {
+      audioSource.stop();
+      isPlaying = false;
+      playButton.textContent = "Play Loop Radio";
     }
   });
 };
