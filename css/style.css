@@ -87,7 +87,7 @@ textarea {
 /* General body styling */
 body {
   font-family: 'Arial', sans-serif;
-  background-color: #e3dac2; /* Color de fondo especificado */
+  background-color: #c4b797; /* Color de fondo especificado */
   color: black; /* Cambia el color del texto para que contraste mejor */
   margin: 0;
   padding: 0;
@@ -106,7 +106,7 @@ body {
   width: 100%;
   padding: 20px;
   text-align: center;
-  background-color: #e3dac2; /* Fondo del contenedor */
+  background-color: #c4b797; /* Fondo del contenedor */
 }
 
 /* Logo styling for top-left corner */
